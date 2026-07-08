@@ -1,0 +1,163 @@
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - standard
+
+plugins:
+  - standard-custom
+  - standard-performance
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-thread_safety
+
+inherit_gem:
+  standard: config/base.yml
+  standard-performance: config/base.yml
+  standard-custom: config/base.yml
+
+AllCops:
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  Exclude:
+    - gemfiles/**/*
+    - bin/**/*
+    - db/**/*
+
+    - vendor/**/*
+    - tmp/**/*
+    - log/**/*
+    - storage/**/*
+    - coverage/**/*
+    - uploads/**/*
+    - .git/**/*
+    - node_modules/**/*
+    - public/packs/**/*
+    - public/packs-test/**/*
+
+# RSpec-specific configuration
+RSpec/ExampleLength:
+  Max: 80
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+  Exclude:
+    - spec/**/*
+
+RSpec/HooksBeforeExamples:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 16
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/RepeatedExample:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude: []
+
+RSpec/DescribedClass:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/MultipleDescribes:
+  Enabled: false
+
+RSpec/RepeatedExampleGroupDescription:
+  Enabled: false
+
+RSpec/RepeatedDescription:
+  Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
+
+RSpec/ExpectActual:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# Custom cop overrides
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+ThreadSafety/ClassAndModuleAttributes:
+  Enabled: false
+
+ThreadSafety/ClassInstanceVariable:
+  Enabled: false
+
+ThreadSafety/DirChdir:
+  Exclude:
+    - "*.gemspec"
+
+# Strict cops that should never be disabled
+Lint/Debugger:
+  Enabled: true
+  Exclude: []
+
+RSpec/Focus:
+  Enabled: true
+  Exclude: []
+
+RSpec/LeakyConstantDeclaration:
+  Exclude:
+    - spec/**/*
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - spec/**/*
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 15
+  CountRepeatedAttributes: false
+  Exclude:
+    - admin/annotations.rb
+    - app/helpers/active_admin/annotations/panel_helper.rb
+    - app/services/active_admin/annotations/review_service.rb
+    - lib/activeadmin/annotations/copy_text.rb
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Max: 10
+  Exclude:
+    - app/helpers/active_admin/annotations/panel_helper.rb
+Metrics/PerceivedComplexity:
+  Enabled: true
+  Max: 10
+  Exclude:
+    - app/helpers/active_admin/annotations/panel_helper.rb
+Metrics/ModuleLength:
+  Enabled: true
+  CountAsOne: [array, hash, heredoc, method_call]
+  Max: 150
+Metrics/ClassLength:
+  Enabled: true
+  CountAsOne: [array, hash, heredoc, method_call]
+  Max: 150

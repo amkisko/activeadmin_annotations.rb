@@ -1,0 +1,39 @@
+# Dependencies
+/.bundle/
+/vendor/bundle
+
+# Documentation
+/.yardoc/
+/doc/
+/rdoc/
+
+# Environment
+/.env
+/.env.local
+
+# Testing
+/coverage/
+/.rspec_status
+/spec/examples.txt
+
+# IDE
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+/tmp/
+
+# Build artifacts
+*.gem
+/pkg/
+
+.pray/cache
