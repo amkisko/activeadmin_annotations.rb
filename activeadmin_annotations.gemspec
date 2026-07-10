@@ -50,7 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", ">= 2"
   spec.add_development_dependency "polyrun", "~> 1.5.0"
   spec.add_development_dependency "rake", "~> 13"
-  spec.add_development_dependency "sprockets-rails", ">= 3.4"
+  spec.add_development_dependency "propshaft", ">= 1.0"
   spec.add_development_dependency "factory_bot", "~> 6"
   spec.add_development_dependency "rspec", "~> 3"
   spec.add_development_dependency "rspec-rails", ">= 6"

@@ -9,7 +9,6 @@ require "active_record/railtie"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "rails/test_unit/railtie"
-require "sprockets/railtie"
 
 if Rails.env.test?
   Bundler.require(:default, :test, :development)

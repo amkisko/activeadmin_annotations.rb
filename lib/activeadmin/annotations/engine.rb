@@ -35,9 +35,8 @@ module ActiveAdmin
         assets_path = root.join("app/assets")
         app.config.importmap.cache_sweepers << assets_path.join("controllers") if app.config.respond_to?(:importmap)
 
-        next unless app.config.respond_to?(:assets)
-
-        app.config.assets.precompile << "activeadmin_annotations.css"
+        assets = app.config.assets if app.config.respond_to?(:assets)
+        assets.precompile << "activeadmin_annotations.css" if assets&.respond_to?(:precompile)
       end
 
       initializer "activeadmin_annotations.view_helpers" do

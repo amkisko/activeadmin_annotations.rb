@@ -9,5 +9,4 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
   config.active_support.deprecation = :stderr
   config.active_record.maintain_test_schema = false
-  config.assets.compile = true if config.respond_to?(:assets)
 end
