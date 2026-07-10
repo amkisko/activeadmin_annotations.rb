@@ -202,7 +202,7 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
-    polyrun (1.5.0)
+    polyrun (2.1.2)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -259,8 +259,9 @@ GEM
       activerecord (>= 7.2)
       activesupport (>= 7.2)
       i18n
-    rbs (3.10.4)
+    rbs (4.0.3)
       logger
+      prism (>= 1.6.0)
       tsort
     rdoc (7.2.0)
       erb
@@ -400,10 +401,10 @@ DEPENDENCIES
   bundler (>= 2)
   bundler-audit (~> 0.9)
   factory_bot (~> 6)
-  polyrun (~> 1.5.0)
+  polyrun (~> 2.1.2)
   propshaft (>= 1.0)
   rake (~> 13)
-  rbs (~> 3)
+  rbs (~> 4)
   rspec (~> 3)
   rspec-rails (>= 6)
   rubocop-rails (~> 2.34)
@@ -485,7 +486,7 @@ CHECKSUMS
   nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
-  polyrun (1.5.0) sha256=dfb58978eb11c7aa35a56e3d33e75671a5cc727652bc5b8bbc5dd798cfdc0189
+  polyrun (2.1.2) sha256=a48bb4cb2d295af6d22bff96e63b1fac5be86de378f506468fe9fb0815e12269
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
@@ -503,7 +504,7 @@ CHECKSUMS
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   ransack (4.4.1) sha256=6aeaac36fc19088570e10da1044e6cfd88c740e20f871b84566fd30e32b7a63d
-  rbs (3.10.4) sha256=b17d7c4be4bb31a11a3b529830f0aa206a807ca42f2e7921a3027dfc6b7e5ce8
+  rbs (4.0.3) sha256=5a7bf70e2628549d9a1f44eae447b2cfe55968a9c60cfff52693a4bdcc020e14
   rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
   regexp_parser (2.12.0) sha256=35a916a1d63190ab5c9009457136ae5f3c0c7512d60291d0d1378ba18ce08ebb
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
