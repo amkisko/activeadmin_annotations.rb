@@ -1,0 +1,21 @@
+<div
+  class="aa-annotations-copy-action"
+  data-controller="activeadmin-annotations--clipboard"
+  data-activeadmin-annotations--clipboard-source-url-value="<%= copy_text_url %>"
+  data-activeadmin-annotations--clipboard-success-message-value="Copied annotation details">
+  <button
+    type="button"
+    class="action-item-button"
+    data-action="activeadmin-annotations--clipboard#copyFromUrl">
+    Copy details
+  </button>
+  <p
+    class="aa-annotations-copy-action__status"
+    data-activeadmin-annotations--clipboard-target="status"
+    aria-live="polite"></p>
+  <textarea
+    class="aa-annotations-copy-action__manual-copy"
+    data-activeadmin-annotations--clipboard-target="manualCopy"
+    hidden
+    readonly></textarea>
+</div>

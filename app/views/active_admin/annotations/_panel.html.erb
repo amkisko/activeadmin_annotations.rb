@@ -1,0 +1,98 @@
+<% annotations_payload = annotations.map do |annotation|
+     {
+       id: annotation.id,
+       field_name: annotation.field_name,
+       selected_text: annotation.selected_text,
+       start_offset: annotation.start_offset,
+       end_offset: annotation.end_offset,
+       comment: annotation.comment,
+       category: annotation.category
+     }
+   end %>
+<% category_options = categories.to_h %>
+<% panel_id = "aa-annotation-#{review.id}" %>
+
+<%= stylesheet_link_tag "activeadmin_annotations", "data-turbo-track": "reload" %>
+
+<div class="aa-annotations-panel">
+  <% if content_stale && stale_message.present? %>
+    <div class="aa-annotations-stale-banner" role="status">
+      <p><%= stale_message %></p>
+      <% if advance_review_url.present? %>
+        <%= button_to "Review latest version",
+          advance_review_url,
+          method: :post,
+          class: "action-item-button" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div
+    class="aa-annotations-layout"
+    data-controller="activeadmin-annotations--annotator"
+    data-activeadmin-annotations--annotator-review-id-value="<%= review.id %>"
+    data-activeadmin-annotations--annotator-field-value="<%= field %>"
+    data-activeadmin-annotations--annotator-category-label-value="<%= category_label %>"
+    data-activeadmin-annotations--annotator-categories-value="<%= ERB::Util.html_escape(category_options.to_json) %>"
+    data-activeadmin-annotations--annotator-create-url-value="<%= admin_annotation_spans_path(format: :json) %>"
+    data-activeadmin-annotations--annotator-update-url-template-value="<%= admin_annotation_span_path(":id", format: :json) %>"
+    data-activeadmin-annotations--annotator-annotations-value="<%= ERB::Util.html_escape(annotations_payload.to_json) %>">
+    <div class="aa-annotations-main">
+      <div class="aa-annotations-output">
+        <div
+          class="aa-annotations-annotatable prose"
+          data-activeadmin-annotations--annotator-target="annotatable">
+          <%= content %>
+        </div>
+      </div>
+
+      <% if context_panels.any? %>
+        <div class="aa-annotations-context">
+          <% context_panels.each do |panel| %>
+            <details class="aa-annotations-context-panel">
+              <summary><%= panel.fetch(:title) %></summary>
+              <pre><%= panel.fetch(:content) %></pre>
+            </details>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <aside class="aa-annotations-sidebar" data-activeadmin-annotations--annotator-target="sidebar">
+      <h4>Annotations</h4>
+      <p class="aa-annotations-hint">Select text in the block, then add a comment.</p>
+      <% if content_revision_enabled && content_revision_label.present? %>
+        <p class="aa-annotations-version"><%= content_revision_label %></p>
+      <% end %>
+
+      <div class="aa-annotations-composer aa-annotations-composer-hidden" data-activeadmin-annotations--annotator-target="composer">
+        <h4 data-activeadmin-annotations--annotator-target="composerHeading">New annotation</h4>
+        <p class="aa-annotations-selected-preview" data-activeadmin-annotations--annotator-target="selectedPreview"></p>
+        <label for="<%= panel_id %>-comment">Comment</label>
+        <textarea
+          id="<%= panel_id %>-comment"
+          rows="4"
+          data-activeadmin-annotations--annotator-target="commentInput"
+          data-action="keydown.meta+enter->activeadmin-annotations--annotator#submitComposer keydown.ctrl+enter->activeadmin-annotations--annotator#submitComposer"></textarea>
+        <% if category_options.any? %>
+          <label for="<%= panel_id %>-category"><%= category_label %></label>
+          <select id="<%= panel_id %>-category" data-activeadmin-annotations--annotator-target="categoryInput">
+            <option value="">None</option>
+            <% category_options.each do |value, label| %>
+              <option value="<%= value %>"><%= label %></option>
+            <% end %>
+          </select>
+        <% else %>
+          <input type="hidden" value="" data-activeadmin-annotations--annotator-target="categoryInput">
+        <% end %>
+        <div class="aa-annotations-composer-actions">
+          <button type="button" class="action-item-button aa-annotations-save-button" data-action="activeadmin-annotations--annotator#submitComposer">Save annotation</button>
+          <button type="button" class="action-item-button" data-action="activeadmin-annotations--annotator#cancelComposer">Cancel</button>
+        </div>
+        <p class="aa-annotations-error aa-annotations-hidden" data-activeadmin-annotations--annotator-target="errorMessage"></p>
+      </div>
+
+      <div class="aa-annotations-list" data-activeadmin-annotations--annotator-target="annotationList"></div>
+    </aside>
+  </div>
+</div>
