@@ -1,0 +1,10 @@
+spec/active_admin/annotations/version_spec.rb
+spec/helpers/active_admin/annotations/panel_helper_spec.rb
+spec/lib/active_admin/annotations/content_revision_spec.rb
+spec/lib/active_admin/annotations/copy_text_spec.rb
+spec/lib/active_admin/annotations/exporter_spec.rb
+spec/lib/active_admin/annotations/review_access_spec.rb
+spec/lib/active_admin/annotations/review_panel_spec.rb
+spec/models/active_admin/annotations/annotation_spec.rb
+spec/models/active_admin/annotations/review_spec.rb
+spec/services/active_admin/annotations/review_service_spec.rb
