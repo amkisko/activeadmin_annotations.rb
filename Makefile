@@ -1,4 +1,4 @@
-.PHONY: release lint test clean
+.PHONY: release lint audit test clean
 
 release:
 	ruby usr/bin/release.rb
@@ -6,6 +6,9 @@ release:
 lint:
 	bundle exec rubocop
 	bundle exec rbs validate
+
+audit:
+	bundle exec bundler-audit check
 
 test:
 	bundle exec polyrun parallel-rspec --workers 5 --merge-failures

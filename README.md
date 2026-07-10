@@ -141,6 +141,26 @@ text_node ActiveAdmin::Annotations::ReviewPanel.render(
 )
 ```
 
+Wire the stale-banner action on the host subject resource:
+
+```ruby
+# app/admin/articles.rb
+ActiveAdmin.register Article do
+  member_action :advance_annotation_review, method: :post do
+    context = {title: resource.title, body: resource.body}
+    ActiveAdmin::Annotations::ReviewService.advance_to_latest!(
+      subject: resource,
+      reviewer: current_user,
+      context: context,
+      latest_content_revision_version: resource.current_version
+    )
+    redirect_to resource_path, notice: "Review moved to the latest content version."
+  end
+end
+```
+
+Pass the same path helper to `ReviewPanel.render` as `advance_review_url`. The panel shows the button only when the review is stale and a URL is present.
+
 Or pass revision options manually to `activeadmin_annotations_panel`.
 
 Enable active_version detection explicitly:
@@ -192,9 +212,54 @@ ActiveAdmin::Annotations.content_revision_strategy = :none
 
 ActiveAdmin registers review and span resources. Use the Export JSONL action on the reviews index for downstream tooling.
 
+## Theme customization
+
+The panel loads `activeadmin_annotations.css` and uses stable `aa-annotations-*` class names. Action buttons use ActiveAdmin's `action-item-button` so they inherit your admin chrome; colors, spacing, borders, and text highlights are overridden in the host app.
+
+### Override styles
+
+Add a host stylesheet that loads after the gem asset (for example in your ActiveAdmin layout or `app/assets/stylesheets/active_admin/`):
+
+```css
+/* app/assets/stylesheets/active_admin/custom_annotations.css */
+.aa-annotations-sidebar {
+  border-color: var(--border-color, #e5e7eb);
+}
+
+.aa-annotations-save-button {
+  background-color: var(--primary, #2563eb);
+  border-color: var(--primary, #2563eb);
+}
+
+::highlight(aa-annotations-saved) {
+  background-color: color-mix(in srgb, var(--primary, #2563eb) 30%, #fef08a);
+}
+
+::highlight(aa-annotations-pending) {
+  background-color: color-mix(in srgb, var(--primary, #2563eb) 40%, #fef08a);
+  text-decoration-color: var(--primary, #2563eb);
+}
+```
+
+Gem defaults include `.dark .aa-annotations-*` rules for ActiveAdmin 4 dark mode. Mirror host overrides under `.dark` when you change light-mode colors.
+
+Main layout hooks: `.aa-annotations-panel`, `.aa-annotations-layout`, `.aa-annotations-sidebar`, `.aa-annotations-annotatable`, `.aa-annotations-composer`, `.aa-annotations-stale-banner`.
+
+### Override partials
+
+Copy views from the gem into `app/views/active_admin/annotations/`:
+
+- `_panel.html.erb` — review UI and composer
+- `_read_only_content.html.erb` — content-only fallback when no reviewer is signed in
+- `_copy_details_action.html.erb` — copy action on the span show page
+
+Override `_panel.html.erb` when you need different markup or to pin a custom Stimulus controller on the annotator root.
+
 ## Authorization
 
 The gem registers ActiveAdmin resources for reviews and spans. Member actions use your host authorization adapter.
+
+Span create, update, destroy, and copy actions verify that the signed-in reviewer owns the target review. Host policies should still gate who may access annotation resources at all (`create?`, `update?`, `destroy?`, `show?`).
 
 With [ActionPolicy](https://github.com/palkan/action_policy) (or ActiveAdmin's ActionPolicy adapter), allow the span Copy details action explicitly:
 

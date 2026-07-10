@@ -38,6 +38,38 @@ jobs:
       - name: Run tests
         run: bundle exec polyrun parallel-rspec --workers 5 --merge-failures
 
+  security:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - gemfile: rails72
+            ruby_version: "3.2"
+          - gemfile: rails8ruby34
+            ruby_version: "3.4"
+          - gemfile: rails8ruby4
+            ruby_version: "4.0"
+          - gemfile: rails8truffleruby
+            ruby_version: "truffleruby"
+
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      RAILS_ENV: test
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby_version }}
+          bundler-cache: true
+
+      - name: Run bundler-audit
+        run: bundle exec bundler-audit check --update
+
   coverage:
     runs-on: ubuntu-latest
     env:
