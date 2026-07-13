@@ -202,7 +202,7 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
-    polyrun (1.5.0)
+    polyrun (2.2.0)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -211,6 +211,7 @@ GEM
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
+    prosopite (2.2.0)
     psych (5.4.0)
       date
       stringio
@@ -400,8 +401,9 @@ DEPENDENCIES
   bundler (>= 2)
   bundler-audit (~> 0.9)
   factory_bot (~> 6)
-  polyrun (~> 1.5.0)
+  polyrun (>= 2.2.0)
   propshaft (>= 1.0)
+  prosopite (~> 2.0)
   rake (~> 13)
   rbs (~> 3)
   rspec (~> 3)
@@ -485,11 +487,12 @@ CHECKSUMS
   nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
-  polyrun (1.5.0) sha256=dfb58978eb11c7aa35a56e3d33e75671a5cc727652bc5b8bbc5dd798cfdc0189
+  polyrun (2.2.0) sha256=9545eb0b52a8c0266e94548b73f3521076c8fb3c1c126cc525297214262f228d
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   propshaft (1.3.2) sha256=1d56a3e56a92c21bfc29caf07406b5386b00d4c47ddf357cf989a5a234b1389e
+  prosopite (2.2.0) sha256=14affaa3ff0ff15abe8f6ae2951de0984dc6da5df1c42333692d2c0789d08b91
   psych (5.4.0) sha256=14f72d69a611af663d7d70e4a7b67d9eb1f3ae9f8d916b478961d5a0075ba5b7
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
