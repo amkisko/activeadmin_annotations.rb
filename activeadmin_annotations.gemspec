@@ -64,5 +64,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "standard-performance", "~> 1.8"
   spec.add_development_dependency "standard-rails", "~> 1.5"
   spec.add_development_dependency "standard-rspec", "~> 0.3"
-  spec.add_development_dependency "rbs", "~> 3"
+  spec.add_development_dependency "rbs", "~> 4"
 end
