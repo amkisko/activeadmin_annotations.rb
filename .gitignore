@@ -37,3 +37,14 @@ Thumbs.db
 /pkg/
 
 .pray/cache
+
+# Trunk (generated; config lives in .trunk/)
+.trunk/out
+.trunk/logs
+.trunk/actions
+.trunk/notifications
+.trunk/tools
+.trunk/plugins
+.trunk/user_trunk.yaml
+.trunk/user.yaml
+.trunk/tmp
