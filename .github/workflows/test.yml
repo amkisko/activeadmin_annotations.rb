@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - gemfile: rails72
-            ruby_version: "3.2"
+            ruby_version: "3.4"
           - gemfile: rails8ruby34
             ruby_version: "3.4"
           - gemfile: rails8ruby4
@@ -46,7 +46,7 @@ jobs:
       matrix:
         include:
           - gemfile: rails72
-            ruby_version: "3.2"
+            ruby_version: "3.4"
           - gemfile: rails8ruby34
             ruby_version: "3.4"
           - gemfile: rails8ruby4
