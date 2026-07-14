@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    activeadmin_annotations (0.1.0)
+    activeadmin_annotations (0.1.1)
       activeadmin (>= 3.0)
       rails (>= 7.1)
 
@@ -428,7 +428,7 @@ CHECKSUMS
   actiontext (7.2.3) sha256=a6ffd9efb7b7b4e26029e5c88e8a2ea9aae8d6cefdfed960be139772f1a94037
   actionview (7.2.3) sha256=1f427d7a41b43804d7250911535740451b9c32b6416239d87e6dab9d5948ecb2
   activeadmin (3.5.1) sha256=1b17548f505ab7defe3e267b8129f51e0cdf5056ea4ccd3e4936563736902805
-  activeadmin_annotations (0.1.0)
+  activeadmin_annotations (0.1.1)
   activejob (7.2.3) sha256=e44964472de267b69e93752f088193c8ad2e56d2ef451d059dd7a53761e5ffb0
   activemodel (7.2.3) sha256=bbaf66aeb93212e98ebf6ab900f8290f9a831645f0b235427f5acf0e074739db
   activerecord (7.2.3) sha256=6facb7478ceb5f6baa9f0647daa50b4a3a43934997900f0011e6c667ff41a0d7
