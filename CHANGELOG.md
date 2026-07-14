@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.1 (2026-07-14)
+
+- Return forbidden responses with access-denied messages for cross-reviewer review and annotation mutations instead of not-found wording.
+
 ## 0.1.0 (2026-07-10)
 
 - Add span-level annotations inside a bounded ActiveAdmin block.

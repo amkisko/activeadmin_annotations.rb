@@ -27,13 +27,13 @@ RSpec.describe ActiveAdmin::Annotations::ReviewAccess do
     it "rejects a review owned by another reviewer" do
       expect do
         described_class.review_for_span_create!(review_id: review.id, reviewer: other_reviewer)
-      end.to raise_error(described_class::Forbidden, /not found/)
+      end.to raise_error(described_class::Forbidden, /access denied/)
     end
 
     it "rejects a missing reviewer" do
       expect do
         described_class.review_for_span_create!(review_id: review.id, reviewer: nil)
-      end.to raise_error(described_class::Forbidden, /not found/)
+      end.to raise_error(described_class::Forbidden, /access denied/)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe ActiveAdmin::Annotations::ReviewAccess do
     it "rejects an annotation on another reviewer's review" do
       expect do
         described_class.authorize_annotation!(annotation: annotation, reviewer: other_reviewer)
-      end.to raise_error(described_class::Forbidden, /not found/)
+      end.to raise_error(described_class::Forbidden, /access denied/)
     end
   end
 end

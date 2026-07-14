@@ -13,14 +13,14 @@ module ActiveAdmin::Annotations
 
       review = Review.find_by(id: review_id)
       raise NotFound, "Review not found" unless review
-      raise Forbidden, "Review not found" unless reviewer.present? && review.reviewer_id == reviewer.id
+      raise Forbidden, "Review access denied" unless reviewer.present? && review.reviewer_id == reviewer.id
 
       review
     end
 
     def self.authorize_annotation!(annotation:, reviewer:)
       raise Forbidden, "Annotation not found" unless annotation
-      raise Forbidden, "Annotation not found" unless reviewer.present? &&
+      raise Forbidden, "Annotation access denied" unless reviewer.present? &&
         annotation.annotation_review.reviewer_id == reviewer.id
 
       annotation
