@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "Collect text highlights and comments inside a bounded ActiveAdmin block, with optional review context, content revision pinning, and JSONL export."
   spec.license = "MIT"
   spec.platform = Gem::Platform::RUBY
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 3.4"
 
   repository_url = "https://github.com/amkisko/activeadmin_annotations.rb"
 

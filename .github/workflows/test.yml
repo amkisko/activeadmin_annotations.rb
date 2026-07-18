@@ -19,8 +19,6 @@ jobs:
             ruby_version: "3.4"
           - gemfile: rails8ruby4
             ruby_version: "4.0"
-          - gemfile: rails8truffleruby
-            ruby_version: "truffleruby"
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
@@ -51,8 +49,6 @@ jobs:
             ruby_version: "3.4"
           - gemfile: rails8ruby4
             ruby_version: "4.0"
-          - gemfile: rails8truffleruby
-            ruby_version: "truffleruby"
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile

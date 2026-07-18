@@ -298,7 +298,7 @@ bundle exec rubocop
 bundle exec polyrun parallel-rspec --workers 5 --merge-failures
 ```
 
-Matrixed Rails versions use [Appraisal](https://github.com/thoughtbot/appraisal): `gemfiles/rails72.gemfile`, `rails8ruby34.gemfile`, and `rails8truffleruby.gemfile`. Run `bundle exec appraisal rspec` to execute RSpec in each gemfile context.
+Matrixed Rails versions use [Appraisal](https://github.com/thoughtbot/appraisal): `gemfiles/rails72.gemfile` and `rails8ruby34.gemfile`. Run `bundle exec appraisal rspec` to execute RSpec in each gemfile context.
 
 Shared agent guidance is managed with [pray](https://github.com/kiskolabs/pray) via `Prayfile`.
 
@@ -307,6 +307,19 @@ Shared agent guidance is managed with [pray](https://github.com/kiskolabs/pray) 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Bug reports and pull requests are welcome at https://github.com/amkisko/activeadmin_annotations.rb/issues
+
+## Links
+
+- [GitHub](https://github.com/amkisko/activeadmin_annotations.rb)
+- [GitLab](https://gitlab.com/amkisko/activeadmin_annotations.rb)
+- [RubyGems](https://rubygems.org/gems/activeadmin_annotations)
+- [Versions Atom](https://rubygems.org/gems/activeadmin_annotations/versions.atom) (feed id `11581035749940`)
+- [libraries.io](https://libraries.io/rubygems/activeadmin_annotations)
+- [Deps.dev](https://deps.dev/rubygems/activeadmin_annotations)
+- [SonarCloud](https://sonarcloud.io/project/overview?id=amkisko_activeadmin_annotations.rb)
+- [Snyk](https://snyk.io/test/github/amkisko/activeadmin_annotations.rb)
+- [Codecov](https://app.codecov.io/github/amkisko/activeadmin_annotations.rb)
+- [OpenSSF Scorecard](https://scorecard.dev/viewer/?uri=github.com/amkisko/activeadmin_annotations.rb)
 
 ## License
 
