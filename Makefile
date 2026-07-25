@@ -10,7 +10,7 @@ lint:
 audit:
 	bundle exec bundler-audit check
 
-test:
+test: lint
 	bundle exec polyrun parallel-rspec --workers 5 --merge-failures
 
 clean:
