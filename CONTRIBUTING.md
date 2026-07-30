@@ -1,29 +1,29 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to activeadmin_annotations. We value learning over perfection but require rigor and responsibility.
+Thank you for your interest in contributing. We value learning over perfection but require rigor and responsibility.
 
-## The golden rule of automation
+## The Golden Rule of Automation
 
 We welcome the use of AI and automation tools to reduce toil, but you must strictly adhere to the following:
 
-1. You are the author. You act as the responsible agent for any code you submit. You must review, debug, and understand every line.
-2. Manage cognitive load. Do not submit massive, unreviewed automated dumps. Respect the reviewers' time by annotating complex logic.
-3. Security. Never feed project secrets or private context into public AI models.
+1. You are the Author: You act as the responsible agent for any code you submit. You must review, debug, and understand every line.
+2. Manage Cognitive Load: Do not submit massive, unreviewed automated dumps. Respect the reviewers' time by annotating complex logic.
+3. Security: Never feed project secrets or private context into public AI models.
 
-## How to contribute
+## How to Contribute
 
-### Reporting issues
+### 1. Reporting Issues
 
-- Verify accuracy before posting. Avoid generalizations.
-- Use issue templates to provide clear goals, constraints, and reproduction steps.
+- Verify Accuracy: Before posting, verify your information. Avoid generalizations.
+- Use Structured Inputs: Use issue templates to provide clear goals, constraints, and reproduction steps. This helps us understand the context immediately.
 
-### Pull request process
+### 2. Pull Request Process
 
-- Scope: keep PRs focused on a single goal.
-- Context: explain why the change is necessary.
-- Testing: run `make test` locally before opening a PR.
+- Scope: Keep PRs focused on a single goal.
+- Context: Explain why the change is necessary. Transparency builds trust.
+- Testing: Run all smoke tests and regression checks locally. We prioritize safety first.
 
-### Review process
+### 3. Review Process
 
 - We encourage productive friction. Expect questions about your approach.
 - If a reviewer suggests a change, view it as mutual aid, not criticism.
