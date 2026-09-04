@@ -69,7 +69,8 @@ module ActiveAdmin::Annotations
         display_version: display_version,
         annotations: annotations,
         content_stale: false,
-        advance_review_url: nil
+        advance_review_url: nil,
+        readonly: review.blank? || display_version != review.content_revision_version
       )
     end
 
@@ -84,7 +85,7 @@ module ActiveAdmin::Annotations
       context = @context_builder.call(content_subject)
       digest = Context.digest_for(context)
 
-      review = ReviewService.find_or_sync_review!(
+      review = ReviewService.preview_review(
         subject: @subject,
         reviewer: @reviewer,
         context: context,
@@ -107,11 +108,12 @@ module ActiveAdmin::Annotations
         display_version: review.content_revision_version,
         annotations: annotations,
         content_stale: review.context_stale?,
-        advance_review_url: revision_enabled ? @advance_review_url : nil
+        advance_review_url: revision_enabled ? @advance_review_url : nil,
+        readonly: false
       )
     end
 
-    def render_panel(review:, content_subject:, revision_enabled:, latest_version:, display_version:, annotations:, content_stale:, advance_review_url:)
+    def render_panel(review:, content_subject:, revision_enabled:, latest_version:, display_version:, annotations:, content_stale:, advance_review_url:, readonly: false)
       context = @context_builder.call(content_subject)
 
       @view_context.helpers.activeadmin_annotations_panel(
@@ -129,12 +131,13 @@ module ActiveAdmin::Annotations
         annotations: annotations,
         review: review,
         categories: @categories,
-        category_label: @category_label
+        category_label: @category_label,
+        readonly: readonly
       )
     end
 
     def annotations_for_review(review:, revision_enabled:, display_version:)
-      return [] if review.blank?
+      return [] unless review&.persisted?
 
       scope = review.annotations.where(field_name: @field).order(:created_at)
       return scope unless revision_enabled

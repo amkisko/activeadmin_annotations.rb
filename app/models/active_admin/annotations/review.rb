@@ -30,12 +30,17 @@ class ActiveAdmin::Annotations::Review < ActiveAdmin::Annotations::ApplicationRe
   }
 
   def needs_follow_up?
-    ActiveModel::Type::Boolean.new.cast(metadata_json.to_h["needs_follow_up"])
+    metadata_flag("needs_follow_up")
   end
 
   def context_stale?
-    ActiveModel::Type::Boolean.new.cast(metadata_json.to_h["context_stale"])
+    metadata_flag("context_stale")
   end
+
+  def metadata_flag(key)
+    ActiveModel::Type::Boolean.new.cast(metadata_json.to_h[key]) == true
+  end
+  private :metadata_flag
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[

@@ -18,9 +18,10 @@ module ActiveAdmin::Annotations
       advance_review_url: nil,
       annotations: nil,
       review: nil,
+      readonly: false,
       &content_block
     )
-      rendered_content = content.presence || capture(&content_block)
+      rendered_content = PanelHtml.prepare(content.presence || capture(&content_block))
       reviewer = current_activeadmin_annotations_reviewer
       unless reviewer
         return render partial: "active_admin/annotations/read_only_content",
@@ -28,7 +29,7 @@ module ActiveAdmin::Annotations
       end
 
       revision_enabled = content_revision_enabled.nil? ? ContentRevision.enabled_for?(subject) : content_revision_enabled
-      review ||= ReviewService.find_or_sync_review!(
+      review ||= ReviewService.preview_review(
         subject: subject,
         reviewer: reviewer,
         context: context,
@@ -37,7 +38,8 @@ module ActiveAdmin::Annotations
         latest_content_revision_version: latest_content_revision_version || content_revision_version || 0,
         content_revision_enabled: revision_enabled
       )
-      annotations ||= annotations_for(review:, field:, revision_enabled:)
+      display_version = content_revision_version.nil? ? review.content_revision_version : content_revision_version.to_i
+      annotations ||= annotations_for(review:, field:, revision_enabled:, display_version:)
       stale_message = stale_message_for(
         review: review,
         revision_enabled: revision_enabled,
@@ -51,27 +53,32 @@ module ActiveAdmin::Annotations
           field: field.to_s,
           review: review,
           annotations: annotations,
+          context: context,
+          context_digest: context_digest || Context.digest_for(context),
           context_panels: context_panels,
           categories: categories || ActiveAdmin::Annotations.categories,
           category_label: category_label || ActiveAdmin::Annotations.category_label,
           content: rendered_content,
           content_revision_enabled: revision_enabled,
-          content_revision_version: review.content_revision_version,
+          content_revision_version: display_version,
           latest_content_revision_version: latest_content_revision_version || review.content_revision_version,
-          content_revision_label: ContentRevision.version_label(review.content_revision_version),
+          content_revision_label: ContentRevision.version_label(display_version),
           content_stale: content_stale || review.context_stale?,
           stale_message: stale_message,
-          advance_review_url: advance_review_url
+          advance_review_url: advance_review_url,
+          readonly: readonly
         }
     end
 
     private
 
-    def annotations_for(review:, field:, revision_enabled:)
+    def annotations_for(review:, field:, revision_enabled:, display_version:)
+      return [] unless review&.persisted?
+
       scope = review.annotations.where(field_name: field.to_s).order(:created_at)
       return scope unless revision_enabled
 
-      scope.where(content_revision_version: review.content_revision_version)
+      scope.where(content_revision_version: display_version)
     end
 
     def stale_message_for(review:, revision_enabled:, pinned_version:, latest_version:)

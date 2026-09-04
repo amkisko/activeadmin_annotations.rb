@@ -298,6 +298,21 @@
   text-underline-offset: 2px;
 }
 
+.aa-annotations-mark {
+  color: inherit;
+}
+
+.aa-annotations-mark--saved {
+  background-color: color-mix(in srgb, #2563eb 30%, #fef08a);
+}
+
+.aa-annotations-mark--pending {
+  background-color: color-mix(in srgb, #2563eb 40%, #fef08a);
+  text-decoration: underline;
+  text-decoration-color: #2563eb;
+  text-underline-offset: 2px;
+}
+
 .aa-annotations-context {
   margin-top: 1rem;
 }

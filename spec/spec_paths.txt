@@ -3,8 +3,13 @@ spec/helpers/active_admin/annotations/panel_helper_spec.rb
 spec/lib/active_admin/annotations/content_revision_spec.rb
 spec/lib/active_admin/annotations/copy_text_spec.rb
 spec/lib/active_admin/annotations/exporter_spec.rb
+spec/lib/active_admin/annotations/panel_html_spec.rb
 spec/lib/active_admin/annotations/review_access_spec.rb
 spec/lib/active_admin/annotations/review_panel_spec.rb
+spec/lib/active_admin/annotations/span_create_spec.rb
+spec/migrations/engine_install_spec.rb
 spec/models/active_admin/annotations/annotation_spec.rb
 spec/models/active_admin/annotations/review_spec.rb
+spec/requests/annotation_reviews_spec.rb
+spec/requests/annotation_spans_spec.rb
 spec/services/active_admin/annotations/review_service_spec.rb

@@ -59,13 +59,22 @@ ActiveAdmin.register ActiveAdmin::Annotations::Annotation, as: "annotation_spans
   end
 
   controller do
-    before_action :authorize_annotation_access!, only: %i[update destroy copy_text]
+    before_action :authorize_annotation_access!, only: %i[show update destroy copy_text]
+
+    def scoped_collection
+      return super unless action_name == "index"
+
+      reviewer = current_annotation_reviewer
+      return super.none if reviewer.blank?
+
+      super.joins(:annotation_review).where(annotation_reviews: {reviewer_id: reviewer.id})
+    end
 
     def create
       review = authorize_review_for_create!
       return if performed?
 
-      assign_content_revision_version_from_review(review)
+      stamp_span_from_review!(review)
       super do |success, failure|
         success.html { redirect_to request.referer || resource_path, notice: "Annotation saved." }
         success.json { render json: annotation_json(resource), status: :created }
@@ -95,12 +104,18 @@ ActiveAdmin.register ActiveAdmin::Annotations::Annotation, as: "annotation_spans
     private
 
     def authorize_review_for_create!
-      ActiveAdmin::Annotations::ReviewAccess.review_for_span_create!(
-        review_id: params.dig(:annotation, :annotation_review_id),
+      ActiveAdmin::Annotations::SpanCreate.review_for!(
+        params: params,
         reviewer: current_annotation_reviewer
       )
-    rescue ActiveAdmin::Annotations::ReviewAccess::Forbidden, ActiveAdmin::Annotations::ReviewAccess::NotFound
-      respond_to_denied_review_access
+    rescue ActiveAdmin::Annotations::SpanCreate::ReadOnly => error
+      respond_to_span_error(error, status: :unprocessable_entity)
+      nil
+    rescue ActiveAdmin::Annotations::ReviewAccess::NotFound => error
+      respond_to_span_error(error, status: :not_found)
+      nil
+    rescue ActiveAdmin::Annotations::ReviewAccess::Forbidden => error
+      respond_to_span_error(error, status: :forbidden)
       nil
     end
 
@@ -109,8 +124,10 @@ ActiveAdmin.register ActiveAdmin::Annotations::Annotation, as: "annotation_spans
         annotation: resource,
         reviewer: current_annotation_reviewer
       )
-    rescue ActiveAdmin::Annotations::ReviewAccess::Forbidden
-      respond_to_denied_review_access
+    rescue ActiveAdmin::Annotations::ReviewAccess::NotFound => error
+      respond_to_span_error(error, status: :not_found)
+    rescue ActiveAdmin::Annotations::ReviewAccess::Forbidden => error
+      respond_to_span_error(error, status: :forbidden)
     end
 
     def current_annotation_reviewer
@@ -119,21 +136,24 @@ ActiveAdmin.register ActiveAdmin::Annotations::Annotation, as: "annotation_spans
       nil
     end
 
-    def respond_to_denied_review_access
+    def respond_to_span_error(error, status:)
       if request.format.json?
-        render json: {errors: ["Review not found"]}, status: :forbidden
+        render json: {errors: [error.message]}, status: status
       else
-        redirect_to request.referer || admin_root_path, alert: "Review not found."
+        redirect_to request.referer || admin_root_path, alert: error.message
       end
     end
 
-    def assign_content_revision_version_from_review(review)
-      params[:annotation][:content_revision_version] = review.content_revision_version
+    def stamp_span_from_review!(review)
+      annotation_params = params[:annotation] ||= ActionController::Parameters.new
+      annotation_params[:annotation_review_id] = review.id
+      annotation_params[:content_revision_version] = review.content_revision_version
     end
 
     def annotation_json(annotation)
       {
         id: annotation.id,
+        annotation_review_id: annotation.annotation_review_id,
         field_name: annotation.field_name,
         selected_text: annotation.selected_text,
         start_offset: annotation.start_offset,

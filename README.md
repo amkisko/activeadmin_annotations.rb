@@ -8,10 +8,10 @@ The gem stays domain-agnostic: the host app chooses what review context means, w
 
 ## Requirements
 
-- Ruby 3.2+
+- Ruby 3.4+
 - Rails 7.1+
 - ActiveAdmin 3.0+
-- PostgreSQL recommended for production (SQLite works for development; some metadata filters use Postgres JSON operators)
+- SQLite (`json` columns) or PostgreSQL (`jsonb`, plus GIN on review metadata). CI appraisals start at Rails 7.2.
 
 ## Host app setup
 
@@ -89,7 +89,9 @@ text_node helpers.activeadmin_annotations_panel(
 )
 ```
 
-The gem stores annotations against the live subject text. If the reviewed text changes, stale detection uses `context_digest` only. No version UI is shown.
+Ordinary strings are escaped. html-safe host HTML is sanitized so paragraphs stay and scripts and event handlers are stripped.
+
+The gem stores annotations against the live subject text. The review row is created on the first annotation save, not when the panel is shown. If the reviewed text changes, stale detection uses `context_digest` only. No version UI is shown.
 
 ## Content revisions (optional)
 
@@ -127,7 +129,7 @@ class Article < ApplicationRecord
 end
 ```
 
-Then either render the panel through `ActiveAdmin::Annotations::ReviewPanel` (handles pinning, stale state, and version filtering):
+Then either render the panel through `ActiveAdmin::Annotations::ReviewPanel` (handles pinning, stale state, and version filtering). Browsing a content version other than the one under review is read-only. Add notes on the version being reviewed:
 
 ```ruby
 text_node ActiveAdmin::Annotations::ReviewPanel.render(
@@ -231,11 +233,13 @@ Add a host stylesheet that loads after the gem asset (for example in your Active
   border-color: var(--primary, #2563eb);
 }
 
-::highlight(aa-annotations-saved) {
+::highlight(aa-annotations-saved),
+.aa-annotations-mark--saved {
   background-color: color-mix(in srgb, var(--primary, #2563eb) 30%, #fef08a);
 }
 
-::highlight(aa-annotations-pending) {
+::highlight(aa-annotations-pending),
+.aa-annotations-mark--pending {
   background-color: color-mix(in srgb, var(--primary, #2563eb) 40%, #fef08a);
   text-decoration-color: var(--primary, #2563eb);
 }

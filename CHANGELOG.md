@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Unreleased
+
+- Create the review record when the first annotation is saved.
+- Make the annotator read-only when browsing a content version other than the one under review.
+- Show This version is read-only. when a save targets a different content version.
+- Show Annotation access denied when a reviewer opens or changes another reviewer's annotation.
+- Permit only status and notes on the review form.
+- Copy annotation comment, offsets, and field.
+- Install annotation tables on SQLite with json columns and on PostgreSQL with jsonb.
+- Escape ordinary panel strings and sanitize html-safe host HTML.
+- Show saved and pending marks when the browser has no custom highlight support.
+
 ## 0.1.1 (2026-07-14)
 
 - Return forbidden responses with access-denied messages for cross-reviewer review and annotation mutations instead of not-found wording.

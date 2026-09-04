@@ -30,6 +30,7 @@ RSpec.describe ActiveAdmin::Annotations::CopyText do
     expect(text).to include('"headline": "Week"')
     expect(text).to include(annotation.id)
     expect(text).to include(review.id)
+    expect(text).not_to include("Reviewer ID:")
   end
 
   it "prepends configured copy instructions" do

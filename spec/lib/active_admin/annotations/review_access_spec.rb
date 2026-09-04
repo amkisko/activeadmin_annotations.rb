@@ -37,6 +37,30 @@ RSpec.describe ActiveAdmin::Annotations::ReviewAccess do
     end
   end
 
+  describe ".subject_for_span_create!" do
+    let(:document) { create(:document) }
+
+    it "returns the subject when the type and id match" do
+      result = described_class.subject_for_span_create!(subject_type: "Document", subject_id: document.id)
+
+      expect(result).to eq(document)
+    end
+
+    it "rejects a missing or unknown subject", :aggregate_failures do
+      expect do
+        described_class.subject_for_span_create!(subject_type: nil, subject_id: document.id)
+      end.to raise_error(described_class::NotFound, "Subject not found")
+
+      expect do
+        described_class.subject_for_span_create!(subject_type: "Kernel", subject_id: document.id)
+      end.to raise_error(described_class::NotFound, "Subject not found")
+
+      expect do
+        described_class.subject_for_span_create!(subject_type: "Document", subject_id: SecureRandom.uuid)
+      end.to raise_error(described_class::NotFound, "Subject not found")
+    end
+  end
+
   describe ".authorize_annotation!" do
     let(:annotation) { create(:annotation, annotation_review: review) }
 
@@ -50,6 +74,12 @@ RSpec.describe ActiveAdmin::Annotations::ReviewAccess do
       expect do
         described_class.authorize_annotation!(annotation: annotation, reviewer: other_reviewer)
       end.to raise_error(described_class::Forbidden, /access denied/)
+    end
+
+    it "rejects a missing annotation" do
+      expect do
+        described_class.authorize_annotation!(annotation: nil, reviewer: reviewer)
+      end.to raise_error(described_class::NotFound, "Annotation not found")
     end
   end
 end

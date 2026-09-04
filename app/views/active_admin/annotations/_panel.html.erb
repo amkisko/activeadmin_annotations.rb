@@ -10,7 +10,10 @@
      }
    end %>
 <% category_options = categories.to_h %>
-<% panel_id = "aa-annotation-#{review.id}" %>
+<% readonly = local_assigns.fetch(:readonly, false) %>
+<% panel_id = review.id.present? ? "aa-annotation-#{review.id}" : "aa-annotation-new-#{field}" %>
+<% context_payload = local_assigns.fetch(:context, {}) %>
+<% context_digest_value = local_assigns[:context_digest] %>
 
 <%= stylesheet_link_tag "activeadmin_annotations", "data-turbo-track": "reload" %>
 
@@ -32,6 +35,12 @@
     data-controller="activeadmin-annotations--annotator"
     data-activeadmin-annotations--annotator-review-id-value="<%= review.id %>"
     data-activeadmin-annotations--annotator-field-value="<%= field %>"
+    data-activeadmin-annotations--annotator-subject-type-value="<%= subject.class.name %>"
+    data-activeadmin-annotations--annotator-subject-id-value="<%= subject.id %>"
+    data-activeadmin-annotations--annotator-context-value="<%= ERB::Util.html_escape(context_payload.to_json) %>"
+    data-activeadmin-annotations--annotator-context-digest-value="<%= context_digest_value %>"
+    data-activeadmin-annotations--annotator-content-revision-version-value="<%= content_revision_version %>"
+    data-activeadmin-annotations--annotator-readonly-value="<%= readonly ? "true" : "false" %>"
     data-activeadmin-annotations--annotator-category-label-value="<%= category_label %>"
     data-activeadmin-annotations--annotator-categories-value="<%= ERB::Util.html_escape(category_options.to_json) %>"
     data-activeadmin-annotations--annotator-create-url-value="<%= admin_annotation_spans_path(format: :json) %>"
@@ -60,7 +69,11 @@
 
     <aside class="aa-annotations-sidebar" data-activeadmin-annotations--annotator-target="sidebar">
       <h4>Annotations</h4>
-      <p class="aa-annotations-hint">Select text in the block, then add a comment.</p>
+      <% if readonly %>
+        <p class="aa-annotations-hint">These notes belong to another version. Add notes on the version being reviewed.</p>
+      <% else %>
+        <p class="aa-annotations-hint">Select text in the block, then add a comment.</p>
+      <% end %>
       <% if content_revision_enabled && content_revision_label.present? %>
         <p class="aa-annotations-version"><%= content_revision_label %></p>
       <% end %>

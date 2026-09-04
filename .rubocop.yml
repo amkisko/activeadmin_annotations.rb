@@ -59,7 +59,9 @@ RSpec/RepeatedExample:
   Enabled: false
 
 RSpec/DescribeClass:
-  Exclude: []
+  Exclude:
+    - spec/requests/**/*
+    - spec/migrations/**/*
 
 RSpec/DescribedClass:
   Enabled: false

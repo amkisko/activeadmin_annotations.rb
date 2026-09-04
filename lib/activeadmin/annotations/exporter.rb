@@ -36,7 +36,7 @@ module ActiveAdmin::Annotations
 
     def export_relation_in_batches
       reviews.find_in_batches(batch_size: BATCH_SIZE) do |batch|
-        ActiveRecord::Associations::Preloader.new(records: batch, associations: :annotations).call
+        ActiveRecord::Associations::Preloader.new(records: batch, associations: [:annotations, :subject]).call
         batch.each do |review|
           rows_for(review).each { |row| yield row }
         end

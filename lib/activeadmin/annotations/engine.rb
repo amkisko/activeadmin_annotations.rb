@@ -25,6 +25,16 @@ module ActiveAdmin
             to: "activeadmin_annotations/annotator_controller.js"
           importmap.pin "controllers/activeadmin_annotations/clipboard_controller",
             to: "activeadmin_annotations/clipboard_controller.js"
+          importmap.pin "activeadmin_annotations/selection",
+            to: "activeadmin_annotations/selection.js"
+          importmap.pin "activeadmin_annotations/highlights",
+            to: "activeadmin_annotations/highlights.js"
+          importmap.pin "activeadmin_annotations/annotation_list",
+            to: "activeadmin_annotations/annotation_list.js"
+          importmap.pin "activeadmin_annotations/annotation_client",
+            to: "activeadmin_annotations/annotation_client.js"
+          importmap.pin "activeadmin_annotations/composer",
+            to: "activeadmin_annotations/composer.js"
         end
 
         Rails.application.importmap.draw(&pin_controller)

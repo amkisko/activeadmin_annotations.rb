@@ -8,13 +8,16 @@ ActiveAdmin.register ActiveAdmin::Annotations::Review, as: "annotation_reviews" 
 
   controller do
     def scoped_collection
-      super.includes(:annotations)
+      annotation_counts = ActiveAdmin::Annotations::Annotation
+        .where("annotation_spans.annotation_review_id = annotation_reviews.id")
+        .select("COUNT(*)")
+      super.select("annotation_reviews.*", "(#{annotation_counts.to_sql}) AS annotations_count")
     end
   end
 
   actions :index, :show, :create, :update
 
-  permit_params :review_status, :notes, :metadata_json
+  permit_params :review_status, :notes
 
   filter :subject_type, as: :select
   filter :subject_id
@@ -36,7 +39,7 @@ ActiveAdmin.register ActiveAdmin::Annotations::Review, as: "annotation_reviews" 
     column :subject_id
     column :reviewer
     column :review_status
-    column("Annotations") { |review| review.annotations.size }
+    column("Annotations") { |review| review.annotations_count }
     column :context_digest
     column :created_at
     actions
@@ -91,9 +94,14 @@ ActiveAdmin.register ActiveAdmin::Annotations::Review, as: "annotation_reviews" 
 
   collection_action :export_jsonl, method: :get do
     exporter = ActiveAdmin::Annotations::Exporter.new(reviews: collection)
-    send_data exporter.to_jsonl,
-      filename: "annotation-reviews-#{Time.current.strftime("%Y%m%d%H%M%S")}.jsonl",
-      type: "application/jsonl"
+    filename = "annotation-reviews-#{Time.current.strftime("%Y%m%d%H%M%S")}.jsonl"
+    headers["Content-Type"] = "application/jsonl"
+    headers["Content-Disposition"] = %(attachment; filename="#{filename}")
+    self.response_body = Enumerator.new do |yielder|
+      exporter.each_jsonl_row do |row|
+        yielder << "#{JSON.generate(row)}\n"
+      end
+    end
   end
 
   action_item :export_jsonl, only: :index do

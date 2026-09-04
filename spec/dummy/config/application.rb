@@ -17,6 +17,7 @@ else
 end
 
 require "activeadmin"
+require "activeadmin_annotations"
 
 module Dummy
   class Application < Rails::Application

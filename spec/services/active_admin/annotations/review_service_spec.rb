@@ -106,6 +106,46 @@ RSpec.describe ActiveAdmin::Annotations::ReviewService do
     end
   end
 
+  describe ".preview_review" do
+    it "assembles a new review without saving", :aggregate_failures do
+      review = nil
+
+      expect do
+        review = described_class.preview_review(
+          subject: document,
+          reviewer: reviewer,
+          context: context,
+          content_revision_enabled: false
+        )
+      end.not_to change(ActiveAdmin::Annotations::Review, :count)
+
+      expect(review).not_to be_persisted
+      expect(review.context_json).to eq(context.deep_stringify_keys)
+      expect(review.context_stale?).to be(false)
+    end
+
+    it "marks an existing review stale in memory without saving", :aggregate_failures do
+      existing = described_class.find_or_sync_review!(
+        subject: document,
+        reviewer: reviewer,
+        context: context,
+        content_revision_enabled: false
+      )
+      new_context = context.merge("output" => context["output"].merge("summary_markdown" => "Regenerated summary"))
+
+      preview = described_class.preview_review(
+        subject: document,
+        reviewer: reviewer,
+        context: new_context,
+        content_revision_enabled: false
+      )
+
+      expect(preview.id).to eq(existing.id)
+      expect(preview.context_stale?).to be(true)
+      expect(existing.reload.context_stale?).to be(false)
+    end
+  end
+
   describe ".advance_to_latest!" do
     around do |example|
       original_strategy = ActiveAdmin::Annotations.content_revision_strategy

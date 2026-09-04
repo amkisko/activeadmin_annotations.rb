@@ -67,4 +67,23 @@ RSpec.describe ActiveAdmin::Annotations::Exporter do
 
     expect(queries.size).to eq(1)
   end
+
+  it "preloads subjects once per batch when exporting a relation" do
+    reviews = create_list(:annotation_review, 2)
+    reviews.each { |review| create(:annotation, annotation_review: review) }
+    relation = ActiveAdmin::Annotations::Review.where(id: reviews.map(&:id))
+
+    queries = []
+    ActiveSupport::Notifications.subscribed(
+      lambda { |*args|
+        event = ActiveSupport::Notifications::Event.new(*args)
+        queries << event.payload[:sql] if event.payload[:sql].to_s.match?(/FROM ["']?documents["']?/i)
+      },
+      "sql.active_record"
+    ) do
+      described_class.new(reviews: relation).to_jsonl
+    end
+
+    expect(queries.size).to eq(1)
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddMetadataJsonGinIndexToAnnotationReviews < ActiveRecord::Migration[8.1]
+class AddMetadataJsonGinIndexToAnnotationReviews < ActiveRecord::Migration[7.1]
   def change
     return unless connection.adapter_name.match?(/postgres/i)
 

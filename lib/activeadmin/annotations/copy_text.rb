@@ -40,7 +40,6 @@ module ActiveAdmin::Annotations
         "Review",
         "Subject: #{review.subject_type} ##{review.subject_id}",
         "Status: #{review.review_status}",
-        "Reviewer ID: #{review.reviewer_id}",
         "Review ID: #{review.id}"
       ]
       if content_revision_enabled?

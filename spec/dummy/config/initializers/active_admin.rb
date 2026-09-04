@@ -2,7 +2,7 @@
 
 ActiveAdmin.setup do |config|
   config.authentication_method = false
-  config.current_user_method = false
+  config.current_user_method = :current_user
   config.site_title = "Dummy"
   config.logout_link_path = false
 end

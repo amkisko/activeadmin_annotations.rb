@@ -18,8 +18,20 @@ module ActiveAdmin::Annotations
       review
     end
 
+    def self.subject_for_span_create!(subject_type:, subject_id:)
+      raise NotFound, "Subject not found" if subject_type.blank? || subject_id.blank?
+
+      klass = subject_type.to_s.safe_constantize
+      raise NotFound, "Subject not found" unless klass.is_a?(Class) && klass < ActiveRecord::Base
+
+      subject = klass.find_by(id: subject_id)
+      raise NotFound, "Subject not found" unless subject
+
+      subject
+    end
+
     def self.authorize_annotation!(annotation:, reviewer:)
-      raise Forbidden, "Annotation not found" unless annotation
+      raise NotFound, "Annotation not found" unless annotation
       raise Forbidden, "Annotation access denied" unless reviewer.present? &&
         annotation.annotation_review.reviewer_id == reviewer.id
 
