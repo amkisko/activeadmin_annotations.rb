@@ -1,4 +1,5 @@
 import { rangeForOffsets } from "activeadmin_annotations/selection";
+import { highlightsSupported } from "activeadmin_annotations/annotator_logic";
 
 export const PENDING_HIGHLIGHT_NAME = "aa-annotations-pending";
 export const SAVED_HIGHLIGHT_NAME = "aa-annotations-saved";
@@ -8,9 +9,7 @@ const MARK_CLASS_BY_NAME = {
   [SAVED_HIGHLIGHT_NAME]: "aa-annotations-mark aa-annotations-mark--saved",
 };
 
-export function highlightsSupported() {
-  return typeof CSS !== "undefined" && Boolean(CSS.highlights);
-}
+export { highlightsSupported };
 
 export class HighlightLayer {
   constructor(root) {

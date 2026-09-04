@@ -23,7 +23,7 @@
 ## Source
 
 - usr/docs/issues/20260904144400_engineering-audit.md
-- CHANGELOG.md Unreleased
+- CHANGELOG.md 0.1.2
 - lib/activeadmin/annotations/panel_html.rb
 - app/helpers/active_admin/annotations/panel_helper.rb
 - app/assets/controllers/activeadmin_annotations/annotator_controller.js

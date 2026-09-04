@@ -1,3 +1,5 @@
+import { createAnnotationPayload, normalizeAnnotation } from "activeadmin_annotations/annotator_logic";
+
 export class Composer {
   constructor(controller) {
     this.controller = controller;
@@ -151,45 +153,11 @@ export class Composer {
   }
 
   createPayload(comment) {
-    const panel = this.controller;
-    const payload = {
-      annotation: {
-        field_name: panel.fieldValue,
-        selected_text: panel.pendingSelection.selectedText,
-        start_offset: panel.pendingSelection.startOffset,
-        end_offset: panel.pendingSelection.endOffset,
-        comment: comment,
-        category: panel.categoryInputTarget.value || null,
-        context_paths_json: [],
-      },
-    };
-
-    if (panel.reviewIdValue) {
-      payload.annotation.annotation_review_id = panel.reviewIdValue;
-    } else {
-      payload.annotation.subject_type = panel.subjectTypeValue;
-      payload.annotation.subject_id = panel.subjectIdValue;
-      payload.annotation.context_json = panel.contextValue;
-      payload.annotation.context_digest = panel.contextDigestValue;
-    }
-
-    if (panel.hasContentRevisionVersionValue) {
-      payload.annotation.displayed_content_revision_version = panel.contentRevisionVersionValue;
-    }
-
-    return payload;
+    return createAnnotationPayload(this.controller, comment);
   }
 
   normalize(annotation) {
-    return {
-      id: annotation.id,
-      field_name: annotation.field_name,
-      selected_text: annotation.selected_text,
-      start_offset: annotation.start_offset,
-      end_offset: annotation.end_offset,
-      comment: annotation.comment,
-      category: annotation.category,
-    };
+    return normalizeAnnotation(annotation);
   }
 
   setHeading(title) {

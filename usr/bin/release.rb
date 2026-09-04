@@ -33,6 +33,7 @@ execute_command("bundle exec appraisal install")
 execute_command("ruby usr/bin/license_audit.rb") if File.exist?("usr/bin/license_audit.rb")
 execute_command("bundle exec rubocop -a 2>&1 | tee tmp/rubocop.log")
 execute_command("bundle exec rbs validate")
+execute_command("bundle exec polyrun -c polyrun.javascript.yml run-shards --workers #{POLYRUN_WORKERS} -- node --test 2>&1 | tee tmp/polyrun-javascript.log")
 
 test_env = []
 test_env << "INTEGRATION=1" if RELEASE_INTEGRATION

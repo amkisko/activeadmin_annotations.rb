@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { currentSelection } from "activeadmin_annotations/selection";
+import { savedHighlightOffsetPairs } from "activeadmin_annotations/annotator_logic";
 import {
   HighlightLayer,
   PENDING_HIGHLIGHT_NAME,
@@ -141,21 +142,10 @@ export default class extends Controller {
   }
 
   renderSavedHighlights() {
-    const offsetPairs = this.annotationsValue.flatMap((annotation) => {
-      if (this.editingAnnotationId && String(annotation.id) === String(this.editingAnnotationId)) {
-        return [];
-      }
-
-      const startOffset = Number(annotation.start_offset);
-      const endOffset = Number(annotation.end_offset);
-      if (!Number.isFinite(startOffset) || !Number.isFinite(endOffset) || endOffset <= startOffset) {
-        return [];
-      }
-
-      return [[startOffset, endOffset]];
-    });
-
-    this.highlightLayer.set(SAVED_HIGHLIGHT_NAME, offsetPairs);
+    this.highlightLayer.set(
+      SAVED_HIGHLIGHT_NAME,
+      savedHighlightOffsetPairs(this.annotationsValue, this.editingAnnotationId)
+    );
   }
 
   clearPendingHighlight() {

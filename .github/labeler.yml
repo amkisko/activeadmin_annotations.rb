@@ -21,7 +21,7 @@ dart:
       - any-glob-to-any-file: "**/*.dart"
 javascript:
   - changed-files:
-      - any-glob-to-any-file: ["**/*.js", "**/*.jsx"]
+      - any-glob-to-any-file: ["**/*.js", "**/*.jsx", "**/*.mjs"]
 typescript:
   - changed-files:
       - any-glob-to-any-file: ["**/*.ts", "**/*.tsx"]

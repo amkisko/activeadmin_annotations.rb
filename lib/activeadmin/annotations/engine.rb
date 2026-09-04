@@ -35,6 +35,8 @@ module ActiveAdmin
             to: "activeadmin_annotations/annotation_client.js"
           importmap.pin "activeadmin_annotations/composer",
             to: "activeadmin_annotations/composer.js"
+          importmap.pin "activeadmin_annotations/annotator_logic",
+            to: "activeadmin_annotations/annotator_logic.mjs"
         end
 
         Rails.application.importmap.draw(&pin_controller)
@@ -43,7 +45,10 @@ module ActiveAdmin
 
       initializer "activeadmin_annotations.assets" do |app|
         assets_path = root.join("app/assets")
-        app.config.importmap.cache_sweepers << assets_path.join("controllers") if app.config.respond_to?(:importmap)
+        if app.config.respond_to?(:importmap)
+          app.config.importmap.cache_sweepers << assets_path.join("controllers")
+          app.config.importmap.cache_sweepers << assets_path.join("javascripts")
+        end
 
         assets = app.config.assets if app.config.respond_to?(:assets)
         assets.precompile << "activeadmin_annotations.css" if assets&.respond_to?(:precompile)

@@ -1,4 +1,4 @@
-.PHONY: release lint audit test clean
+.PHONY: release lint audit test test-javascript clean
 
 release:
 	ruby usr/bin/release.rb
@@ -10,7 +10,10 @@ lint:
 audit:
 	bundle exec bundler-audit check
 
-test: lint
+test-javascript:
+	bundle exec polyrun -c polyrun.javascript.yml run-shards --workers 5 -- node --test
+
+test: lint test-javascript
 	bundle exec polyrun parallel-rspec --workers 5 --merge-failures
 
 clean:

@@ -1,0 +1,6 @@
+version: 1
+
+partition:
+  paths_file: spec/javascript_paths.txt
+  paths_build:
+    all_glob: spec/javascript/**/*.{test,spec}.{mjs,js,cjs}

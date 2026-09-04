@@ -1,3 +1,5 @@
+import { categoryLabelFor, escapeHtml } from "activeadmin_annotations/annotator_logic";
+
 export function emptyAnnotationListItem() {
   const item = document.createElement("p");
   item.className = "aa-annotations-empty";
@@ -24,17 +26,4 @@ export function annotationListItem(annotation, { readonly, categoryLabel, catego
       ${actions}
     `;
   return item;
-}
-
-function categoryLabelFor(value, categories) {
-  if (!value) return "";
-  return categories[value] || value;
-}
-
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 }
