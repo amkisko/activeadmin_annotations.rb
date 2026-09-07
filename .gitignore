@@ -36,7 +36,7 @@ Thumbs.db
 *.gem
 /pkg/
 
-.pray/cache
+.pray
 
 # Trunk (generated; config lives in .trunk/)
 .trunk/out
