@@ -55,7 +55,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "factory_bot", "~> 6"
   spec.add_development_dependency "rspec", "~> 3"
   spec.add_development_dependency "rspec-rails", ">= 6"
-  spec.add_development_dependency "sqlite3", ">= 1"
+  spec.add_development_dependency "sqlite3", ">= 2.9.6"
   spec.add_development_dependency "rubocop-rails", "~> 2.34"
   spec.add_development_dependency "rubocop-rspec", "~> 3.8"
   spec.add_development_dependency "rubocop-thread_safety", "~> 0.7"
