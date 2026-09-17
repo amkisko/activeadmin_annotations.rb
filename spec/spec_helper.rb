@@ -38,3 +38,4 @@ Polyrun::RSpec.install_example_prosopite!
 if %w[1 true yes].include?(ENV["POLYRUN_SPEC_QUALITY"]&.to_s&.downcase)
   Polyrun::RSpec.install_spec_quality!
 end
+require_relative "support/junit_formatter"
