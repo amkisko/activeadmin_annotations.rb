@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.3 (2026-10-28)
+
+- Stop release when confirmation input closes before an answer.
+
 ## 0.1.2 (2026-09-04)
 
 - Create the review record when the first annotation is saved.

@@ -2,7 +2,7 @@ Quality CI failed because Gemfile.lock still declared sqlite3 (>= 1) after the g
 
 ## Participants
 
-- amkisko
+Andrei Makarov (@amkisko)
 
 ## Decisions
 

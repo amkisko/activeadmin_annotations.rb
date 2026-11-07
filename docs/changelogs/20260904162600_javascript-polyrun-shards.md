@@ -1,5 +1,9 @@
 # JavaScript tests through Polyrun shards
 
+## Participants
+
+Andrei Makarov (@amkisko)
+
 ## Decisions
 
 JavaScript tests under spec/javascript are discovered by glob, written to a paths file, and fanned out with polyrun run-shards the same way RSpec uses spec/**/*_spec.rb.

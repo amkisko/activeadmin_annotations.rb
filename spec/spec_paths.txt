@@ -10,6 +10,7 @@ spec/lib/active_admin/annotations/span_create_spec.rb
 spec/migrations/engine_install_spec.rb
 spec/models/active_admin/annotations/annotation_spec.rb
 spec/models/active_admin/annotations/review_spec.rb
+spec/release_confirmation_spec.rb
 spec/requests/annotation_reviews_spec.rb
 spec/requests/annotation_spans_spec.rb
 spec/services/active_admin/annotations/review_service_spec.rb
